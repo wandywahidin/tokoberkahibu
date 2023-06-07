@@ -3,40 +3,36 @@ import {useState} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 
-const EditLaporan = () => {
+const EditLaporan = ({laporan, getData}) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [tanggal, setTanggal] = useState("")
-    const [pemasukan, setPemasukan] = useState("")
-    const [pengeluaran, setPengeluaran] = useState("")
+    const [tanggal, setTanggal] = useState(new Date(laporan.tanggal).toLocaleDateString('en-CA'))
+    const [pemasukan, setPemasukan] = useState(laporan.pemasukan)
+    const [pengeluaran, setPengeluaran] = useState(laporan.pengeluaran)
 
     const router = useRouter()
 
     const handleModal = () => {
         setIsOpen(!isOpen)
-        resetState()
-    }
-    const resetState = () => {
-        setTanggal("")
-        setPemasukan("")
-        setPengeluaran("")
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.post('/api/laporan', {
+        await axios.patch(`/api/laporan/${laporan.id}`, {
             tanggal : new Date(tanggal).toLocaleDateString('id-ID', {year:'numeric', month:'long', day:'numeric'}),
             pemasukan :Number(pemasukan) ,
             pengeluaran : Number(pengeluaran),
             margin: pemasukan-pengeluaran,
             keuntungan : 15/100 * pemasukan
         })
-        resetState()
-        router.refresh()
+        getData()
+        // router.refresh()
         setIsOpen(false)
     }
   return (
     <div className='mb-4'>
         <button className='btn btn-secondary' onClick={handleModal}>Edit</button>
         <div className={isOpen ? 'modal modal-open' : 'modal'}>
+        {laporan.tanggal}
+
             <div className="modal-box">
                 <h3 className="font-bold text-xl mb-2">Edit Laporan</h3>
                 <form onSubmit={handleSubmit}>

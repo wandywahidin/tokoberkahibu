@@ -3,7 +3,7 @@ import {useState} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 
-const DeleteLaporan = ({laporan}) => {
+const DeleteLaporan = ({laporan, getData}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const router = useRouter()
@@ -14,7 +14,8 @@ const DeleteLaporan = ({laporan}) => {
    
     const handleDelete = async (laporanId) => {
         await axios.delete(`/api/laporan/${laporanId}`)
-        router.refresh()
+        // router.refresh()
+        getData()
         setIsOpen(false)
     }
   return (

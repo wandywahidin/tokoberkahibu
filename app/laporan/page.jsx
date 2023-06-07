@@ -1,32 +1,31 @@
+"use client"
+import {useEffect, useState} from 'react'
+import axios from 'axios'
 import { PrismaClient } from "@prisma/client"
 import AddLaporan from "./addLaporan"
 import DeleteLaporan from "./deleteLaporan"
 import EditLaporan from "./editLaporan"
 
-const prisma = new PrismaClient()
+const Laporan = () => {
+    const [data, setData] = useState([])
 
-const getLaporans = async () => {
-    const res = await prisma.laporan.findMany({
-        select : {
-            id : true,
-            tanggal : true,
-            pemasukan : true,
-            pengeluaran : true,
-            margin : true,
-            keuntungan : true
-        }
-    })
-    return res
-}
+    const getData = async () => {
+        const res = await axios.get(`/api/laporan`)
+        console.log('res.data :>> ', res.data);
+        setData(res.data)
+    }
 
-const Laporan = async () => {
-    const laporans = await getLaporans()
+    useEffect(() => {
+        getData()
+    }, [])
+    
+    
   return (
     <div>
-        <AddLaporan/>
+        <AddLaporan getData ={getData}/>
         <table className="table w-full">
             <thead>
-                <tr>
+                <tr className='text-lg font-bold'>
                     <th>Tanggal</th>
                     <th>Pemasukan</th>
                     <th>Pengeluaran</th>
@@ -36,7 +35,7 @@ const Laporan = async () => {
                 </tr>
             </thead>
             <tbody>
-                {laporans.map((item) => (
+                {data.map((item) => (
                 <tr key={item.id}>
                     <td>{item.tanggal}</td>
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.pemasukan)}</td>
@@ -44,12 +43,11 @@ const Laporan = async () => {
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.margin)}</td>
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.keuntungan)}</td>   
                     <td className="flex gap-2 justify-center">
-                        <DeleteLaporan laporan={item}/>
-                        <EditLaporan/>
+                        <DeleteLaporan laporan={item} getData={getData}/>
+                        <EditLaporan laporan={item} getData={getData}/>
                     </td>
                 </tr>
                 ))}
-                
             </tbody>
         </table>
     </div>

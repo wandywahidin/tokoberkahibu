@@ -15,3 +15,17 @@ export const POST = async (request) => {
     })
     return NextResponse.json(laporan, {status:201})
 }
+
+export const GET = async () => {
+    const res = await prisma.laporan.findMany({
+        select : {
+            id : true,
+            tanggal : true,
+            pemasukan : true,
+            pengeluaran : true,
+            margin : true,
+            keuntungan : true
+        }
+    })
+    return NextResponse.json(res, {status:200})
+}
