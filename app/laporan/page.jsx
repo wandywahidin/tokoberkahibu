@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import AddLaporan from "./addLaporan"
 import DeleteLaporan from "./deleteLaporan"
+import EditLaporan from "./editLaporan"
 
 const prisma = new PrismaClient()
 
@@ -42,8 +43,9 @@ const Laporan = async () => {
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.pengeluaran)}</td>
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.margin)}</td>
                     <td>{new Intl.NumberFormat('id-ID',  { style: 'currency', currency: 'IDR',minimumFractionDigits: 0, maximumFractionDigits: 0, }).format(item.keuntungan)}</td>   
-                    <td>
-                        <DeleteLaporan/>
+                    <td className="flex gap-2 justify-center">
+                        <DeleteLaporan laporan={item}/>
+                        <EditLaporan/>
                     </td>
                 </tr>
                 ))}

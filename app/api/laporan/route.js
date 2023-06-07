@@ -13,5 +13,5 @@ export const POST = async (request) => {
             keuntungan : body.keuntungan
         }
     })
-    return NextResponse.json(laporan)
+    return NextResponse.json(laporan, {status:201})
 }
