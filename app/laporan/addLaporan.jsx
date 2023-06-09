@@ -44,7 +44,7 @@ const AddLaporan = ({getData}) => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-control w-full mb-3">
                         <label className="label">Tanggal</label>
-                        <input value={tanggal} onChange={(e)=> setTanggal(e.target.value)} type="date" className="input input-bordered" placeholder="Tanggal" />
+                        <input value={tanggal} onChange={(e)=> setTanggal(e.target.value)} type="date" className="input input-bordered w-full" placeholder="Tanggal" />
                     </div>
                     <div className="form-control w-full mb-3">
                         <label className="label">Pemasukan</label>
