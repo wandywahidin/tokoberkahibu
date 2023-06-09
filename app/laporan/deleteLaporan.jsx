@@ -20,7 +20,7 @@ const DeleteLaporan = ({laporan, getData}) => {
     }
   return (
     <div>
-        <button className='btn btn-error' onClick={handleModal}>Delete</button>
+        <button className='btn bg-red-500 dark:text-white' onClick={handleModal}>Delete</button>
         <div className={isOpen ? 'modal modal-open' : 'modal'}>
             <div className="modal-box">
                 <h3 className="font-bold text-xl mb-2">Apakah anda yakin akan menghapus laporan tanggal {laporan.tanggal} ?</h3>

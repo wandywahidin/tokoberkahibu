@@ -12,7 +12,6 @@ const Laporan = () => {
 
   const getData = async () => {
     const res = await axios.get(`/api/laporan`);
-    console.log("res.data :>> ", res.data);
     setData(res.data);
     setLoading(false);
   };
@@ -36,64 +35,68 @@ const Laporan = () => {
       </div>
     );
   return (
-    <div>
-      <AddLaporan getData={getData} />
-      <table className="table w-full">
-        <thead>
-          <tr className="text-lg font-bold">
-            <th>Tanggal</th>
-            <th>Pemasukan</th>
-            <th>Pengeluaran</th>
-            <th>Margin</th>
-            <th>15%</th>
-            <th className=" text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td>{item.tanggal}</td>
-              <td>
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(item.pemasukan)}
-              </td>
-              <td>
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(item.pengeluaran)}
-              </td>
-              <td>
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(item.margin)}
-              </td>
-              <td>
-                {new Intl.NumberFormat("id-ID", {
-                  style: "currency",
-                  currency: "IDR",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                }).format(item.keuntungan)}
-              </td>
-              <td className="flex gap-2 justify-center">
-                <DeleteLaporan laporan={item} getData={getData} />
-                <EditLaporan laporan={item} getData={getData} />
-              </td>
+    <>
+      <div className="">
+        <AddLaporan getData={getData} />
+      </div>
+      <div className=" overflow-auto">
+        <table className="table w-full">
+          <thead>
+            <tr className="text-lg font-bold text-white">
+              <th>Tanggal</th>
+              <th>Pemasukan</th>
+              <th>Pengeluaran</th>
+              <th>Margin</th>
+              <th>15%</th>
+              <th className=" text-center">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr key={item.id} >
+                <td className="text-white">{item.tanggal}</td>
+                <td className="text-white">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(item.pemasukan)}
+                </td>
+                <td className="text-white">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(item.pengeluaran)}
+                </td>
+                <td className="text-white">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(item.margin)}
+                </td>
+                <td className="text-white">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(item.keuntungan)}
+                </td>
+                <td className="flex gap-2 justify-center">
+                  <DeleteLaporan laporan={item} getData={getData} />
+                  <EditLaporan laporan={item} getData={getData} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

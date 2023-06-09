@@ -29,11 +29,11 @@ const EditLaporan = ({laporan, getData}) => {
     }
   return (
     <div className='mb-4'>
-        <button className='btn btn-secondary' onClick={handleModal}>Edit</button>
+        <button className='btn bg-purple-500 text-white' onClick={handleModal}>Edit</button>
         <div className={isOpen ? 'modal modal-open' : 'modal'}>
         {laporan.tanggal}
 
-            <div className="modal-box">
+            <div className="modal-box ">
                 <h3 className="font-bold text-xl mb-2">Edit Laporan</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-control w-full mb-3">

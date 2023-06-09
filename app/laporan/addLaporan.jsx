@@ -20,6 +20,7 @@ const AddLaporan = ({getData}) => {
         setPemasukan("")
         setPengeluaran("")
     }
+   
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios.post('/api/laporan', {
@@ -36,7 +37,7 @@ const AddLaporan = ({getData}) => {
     }
   return (
     <div className='mb-4'>
-        <button className='btn' onClick={handleModal}>Tambah Laporan</button>
+        <button className='btn bg-gray-400 font-bold dark:text-white' onClick={handleModal}>Tambah Laporan</button>
         <div className={isOpen ? 'modal modal-open' : 'modal'}>
             <div className="modal-box">
                 <h3 className="font-bold text-xl mb-2">Tambah Laporan</h3>
