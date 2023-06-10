@@ -16,7 +16,7 @@ const Laporan = () => {
     setLoading(false);
   };
   const getDataTotal = async () => {
-    const response = await axios.get('/api/total');
+    const response = await axios.get('/api/total', {cache:false});
     const dataTotal = await response.data.keuntungan;
     setdataTotal(dataTotal)
   }
