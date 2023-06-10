@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
-import { PrismaClient } from "@prisma/client";
 import AddLaporan from "./addLaporan";
 import DeleteLaporan from "./deleteLaporan";
 import EditLaporan from "./editLaporan";
@@ -9,15 +8,22 @@ import EditLaporan from "./editLaporan";
 const Laporan = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataTotal, setdataTotal] = useState("")
 
   const getData = async () => {
     const res = await axios.get(`/api/laporan`);
     setData(res.data);
     setLoading(false);
   };
+  const getDataTotal = async () => {
+    const response = await axios.get('/api/total');
+    const dataTotal = await response.data.keuntungan;
+    setdataTotal(dataTotal)
+  }
 
   useEffect(() => {
     getData();
+    getDataTotal()
   }, []);
 
   if (loading)
@@ -36,8 +42,14 @@ const Laporan = () => {
     );
   return (
     <>
-      <div className="">
+      <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
         <AddLaporan getData={getData} />
+        <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(dataTotal)}</button>
       </div>
       <div className=" overflow-auto">
         <table className="table w-full">
