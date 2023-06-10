@@ -23,8 +23,10 @@ const Laporan = () => {
 
   useEffect(() => {
     getData();
-    getDataTotal()
   }, []);
+  useEffect(() => {
+    getDataTotal()
+  }, [data]);
 
   if (loading)
     return (
@@ -43,7 +45,7 @@ const Laporan = () => {
   return (
     <>
       <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
-        <AddLaporan getData={getData} getDataTotal={getDataTotal} />
+        <AddLaporan getData={getData} />
         <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
@@ -100,8 +102,8 @@ const Laporan = () => {
                   }).format(item.keuntungan)}
                 </td>
                 <td className="flex gap-2 justify-center">
-                  <DeleteLaporan laporan={item} getData={getData} getDataTotal={getDataTotal} />
-                  <EditLaporan laporan={item} getData={getData} getDataTotal={getDataTotal} />
+                  <DeleteLaporan laporan={item} getData={getData} />
+                  <EditLaporan laporan={item} getData={getData} />
                 </td>
               </tr>
             ))}
