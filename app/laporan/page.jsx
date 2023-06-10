@@ -13,20 +13,15 @@ const Laporan = () => {
   const getData = async () => {
     const res = await axios.get(`/api/laporan`);
     setData(res.data);
-    setLoading(false);
-  };
-  const getDataTotal = async () => {
     const response = await axios.get('/api/total', {cache:false});
     const dataTotal = await response.data.keuntungan;
     setdataTotal(dataTotal)
-  }
+    setLoading(false);
+  };
 
   useEffect(() => {
     getData();
   }, []);
-  useEffect(() => {
-    getDataTotal()
-  }, [data]);
 
   if (loading)
     return (
@@ -46,12 +41,12 @@ const Laporan = () => {
     <>
       <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
         <AddLaporan getData={getData} />
-        {/* <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
+        <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
-                  }).format(dataTotal)}</button> */}
+                  }).format(dataTotal)}</button>
       </div>
       <div className=" overflow-auto">
         <table className="table w-full">
