@@ -46,12 +46,12 @@ const Laporan = () => {
     <>
       <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
         <AddLaporan getData={getData} />
-        <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
+        {/* <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
-                  }).format(dataTotal)}</button>
+                  }).format(dataTotal)}</button> */}
       </div>
       <div className=" overflow-auto">
         <table className="table w-full">
