@@ -27,5 +27,10 @@ export const GET = async () => {
             keuntungan : true
         }
     })
-    return NextResponse.json(res, {status:200})
+    const total = await prisma.laporan.aggregate({
+        _sum : {
+            keuntungan : true
+        }
+    })
+    return NextResponse.json({res, total}, {status:200})
 }

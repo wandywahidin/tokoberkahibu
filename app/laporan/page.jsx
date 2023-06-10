@@ -12,16 +12,15 @@ const Laporan = () => {
 
   const getData = async () => {
     const res = await axios.get(`/api/laporan`);
-    setData(res.data);
-    const response = await axios.get('/api/total', {cache:false});
-    const dataTotal = await response.data.keuntungan;
-    setdataTotal(dataTotal)
+    setData(res.data.res);
+    setdataTotal(res.data.total._sum.keuntungan)
     setLoading(false);
   };
 
   useEffect(() => {
     getData();
   }, []);
+
 
   if (loading)
     return (
