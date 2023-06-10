@@ -24,7 +24,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (username == 'sindicantik' && password == 'sindicantik') { 
-            router.push('/laporan')
+            router.push('/bulan')
             resetState()
             setIsOpen(false)
         } else {

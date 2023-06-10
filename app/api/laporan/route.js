@@ -10,27 +10,9 @@ export const POST = async (request) => {
             pemasukan : body.pemasukan,
             pengeluaran : body.pengeluaran,
             margin : body.margin,
-            keuntungan : body.keuntungan
+            keuntungan : body.keuntungan,
+            bulanId : body.bulanId
         }
     })
     return NextResponse.json(laporan, {status:201})
-}
-
-export const GET = async () => {
-    const res = await prisma.laporan.findMany({
-        select : {
-            id : true,
-            tanggal : true,
-            pemasukan : true,
-            pengeluaran : true,
-            margin : true,
-            keuntungan : true
-        }
-    })
-    const total = await prisma.laporan.aggregate({
-        _sum : {
-            keuntungan : true
-        }
-    })
-    return NextResponse.json({res, total}, {status:200})
 }

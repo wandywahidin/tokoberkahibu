@@ -4,14 +4,18 @@ import axios from "axios";
 import AddLaporan from "./addLaporan";
 import DeleteLaporan from "./deleteLaporan";
 import EditLaporan from "./editLaporan";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const Laporan = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataTotal, setdataTotal] = useState("")
 
+  const router = useRouter()
+  const param = useSearchParams().get("bulan")
+
   const getData = async () => {
-    const res = await axios.get(`/api/laporan`);
+    const res = await axios.get(`/api/laporan/${param}`);
     setData(res.data.res);
     setdataTotal(res.data.total._sum.keuntungan)
     setLoading(false);
@@ -38,7 +42,7 @@ const Laporan = () => {
     );
   return (
     <>
-      <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
+      <div className="md:flex grid grid-cols-3  gap-4 md:gap-10 ">
         <AddLaporan getData={getData} />
         <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
                     style: "currency",
@@ -46,6 +50,7 @@ const Laporan = () => {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   }).format(dataTotal)}</button>
+        <button onClick={() => router.push('/bulan')} className="btn bg-green-500 text-white">Kembali</button>
       </div>
       <div className=" overflow-auto">
         <table className="table w-full">
