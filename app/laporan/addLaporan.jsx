@@ -1,7 +1,7 @@
 "use client"
 import {useState} from 'react'
 import axios from 'axios'
-import {useRouter} from 'next/navigation'
+import {useSearchParams} from 'next/navigation'
 
 const AddLaporan = ({getData}) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -9,7 +9,7 @@ const AddLaporan = ({getData}) => {
     const [pemasukan, setPemasukan] = useState("")
     const [pengeluaran, setPengeluaran] = useState("")
 
-    const router = useRouter()
+    const param = useSearchParams().get("bulan")
 
     const handleModal = () => {
         setIsOpen(!isOpen)
@@ -28,7 +28,8 @@ const AddLaporan = ({getData}) => {
             pemasukan :Number(pemasukan) ,
             pengeluaran : Number(pengeluaran),
             margin: pemasukan-pengeluaran,
-            keuntungan : 15/100 * pemasukan
+            keuntungan : 15/100 * pemasukan,
+            bulanId : Number(param)
         })
         resetState()
         getData()

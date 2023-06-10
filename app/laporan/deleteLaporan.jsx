@@ -23,10 +23,10 @@ const DeleteLaporan = ({laporan, getData}) => {
         <button className='btn bg-red-500 dark:text-white' onClick={handleModal}>Delete</button>
         <div className={isOpen ? 'modal modal-open' : 'modal'}>
             <div className="modal-box">
-                <h3 className="font-bold text-xl mb-2">Apakah anda yakin akan menghapus laporan tanggal {laporan.tanggal} ?</h3>
+                <h3 className="font-bold text-xl mb-2">Serius Hapus laporan tanggal {laporan.tanggal} ?</h3>
                 <div className="modal-action">
-                    <button onClick={handleModal} type="button" className="btn">Tidak</button>
-                    <button onClick={() => handleDelete(laporan.id)} type="button" className="btn btn-primary">Ya</button>
+                    <button onClick={handleModal} type="button" className="btn">Ga jadi</button>
+                    <button onClick={() => handleDelete(laporan.id)} type="button" className="btn btn-error">Serius lah</button>
                 </div>
             </div>
         </div>

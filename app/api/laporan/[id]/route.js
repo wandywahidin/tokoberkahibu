@@ -26,3 +26,34 @@ export const DELETE = async (request, {params}) => {
     })
     return NextResponse.json(laporan, {status:200})
 }
+
+export const GET = async (request, {params}) => {
+    const res = await prisma.laporan.findMany({where : {
+        bulanId : Number(params.id)
+    }}, {
+        select : {
+            id : true,
+            tanggal : true,
+            pemasukan : true,
+            pengeluaran : true,
+            margin : true,
+            keuntungan : true,
+            bulan : true
+        }
+    })
+    const total = await prisma.laporan.aggregate({
+        where: {
+          bulanId: Number(params.id)
+        },
+        select: {
+          _sum: {
+            select: {
+              keuntungan: true // Aggregating the sum of the "keuntungan" field
+            }
+          }
+        }
+      });
+      
+      return NextResponse.json({res, total}, {status:200})
+      
+}
