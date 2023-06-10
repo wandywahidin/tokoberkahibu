@@ -43,7 +43,7 @@ const Laporan = () => {
   return (
     <>
       <div className="md:flex grid grid-cols-2  gap-4 md:gap-10 ">
-        <AddLaporan getData={getData} />
+        <AddLaporan getData={getData} getDataTotal={getDataTotal} />
         <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
@@ -100,8 +100,8 @@ const Laporan = () => {
                   }).format(item.keuntungan)}
                 </td>
                 <td className="flex gap-2 justify-center">
-                  <DeleteLaporan laporan={item} getData={getData} />
-                  <EditLaporan laporan={item} getData={getData} />
+                  <DeleteLaporan laporan={item} getData={getData} getDataTotal={getDataTotal} />
+                  <EditLaporan laporan={item} getData={getData} getDataTotal={getDataTotal} />
                 </td>
               </tr>
             ))}

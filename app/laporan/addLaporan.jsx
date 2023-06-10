@@ -3,7 +3,7 @@ import {useState} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 
-const AddLaporan = ({getData}) => {
+const AddLaporan = ({getData, getDataTotal}) => {
     const [isOpen, setIsOpen] = useState(false)
     const [tanggal, setTanggal] = useState("")
     const [pemasukan, setPemasukan] = useState("")
@@ -32,7 +32,7 @@ const AddLaporan = ({getData}) => {
         })
         resetState()
         getData()
-        // router.refresh()
+        getDataTotal()
         setIsOpen(false)
     }
   return (

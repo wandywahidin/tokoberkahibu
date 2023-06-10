@@ -3,7 +3,7 @@ import {useState} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 
-const EditLaporan = ({laporan, getData}) => {
+const EditLaporan = ({laporan, getData, getDataTotal}) => {
     const [isOpen, setIsOpen] = useState(false)
     const [tanggal, setTanggal] = useState(new Date(laporan.tanggal).toLocaleDateString('en-CA'))
     const [pemasukan, setPemasukan] = useState(laporan.pemasukan)
@@ -24,6 +24,7 @@ const EditLaporan = ({laporan, getData}) => {
             keuntungan : 15/100 * pemasukan
         })
         getData()
+        getDataTotal()
         // router.refresh()
         setIsOpen(false)
     }
