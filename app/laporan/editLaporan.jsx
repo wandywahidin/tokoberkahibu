@@ -8,6 +8,7 @@ const EditLaporan = ({laporan, getData}) => {
     const [tanggal, setTanggal] = useState(new Date(laporan.tanggal).toLocaleDateString('en-CA'))
     const [pemasukan, setPemasukan] = useState(laporan.pemasukan)
     const [pengeluaran, setPengeluaran] = useState(laporan.pengeluaran)
+    const [piutang, setPiutang] = useState(laporan.piutang)
 
     const router = useRouter()
 
@@ -20,6 +21,7 @@ const EditLaporan = ({laporan, getData}) => {
             tanggal : new Date(tanggal).toLocaleDateString('id-ID', {year:'numeric', month:'long', day:'numeric'}),
             pemasukan :Number(pemasukan) ,
             pengeluaran : Number(pengeluaran),
+            piutang : Number(piutang),
             margin: pemasukan-pengeluaran,
             keuntungan : 15/100 * pemasukan
         })
@@ -45,6 +47,10 @@ const EditLaporan = ({laporan, getData}) => {
                     <div className="form-control w-full mb-3">
                         <label className="label">Pengeluaran</label>
                         <input value={pengeluaran} onChange={(e)=> setPengeluaran(e.target.value)} type="number" className="input input-bordered" placeholder="Rp." />
+                    </div>
+                    <div className="form-control w-full mb-3">
+                        <label className="label">Piutang</label>
+                        <input value={piutang} onChange={(e)=> setPiutang(e.target.value)} type="number" className="input input-bordered" placeholder="Rp." />
                     </div>
                     <div className="modal-action">
                         <button onClick={handleModal} type="button" className="btn">Close</button>
