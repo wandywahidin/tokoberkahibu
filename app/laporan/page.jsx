@@ -5,26 +5,46 @@ import AddLaporan from "./addLaporan";
 import DeleteLaporan from "./deleteLaporan";
 import EditLaporan from "./editLaporan";
 import { useSearchParams, useRouter } from "next/navigation";
+import AddKomentar from "./addKomentar";
 
 const Laporan = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [dataTotal, setdataTotal] = useState("")
+  const [dataTotalKeuntungan, setdataTotalKeuntungan] = useState("");
+  const [dataTotalPemasukan, setDataTotalPemasukan] = useState("");
+  const [dataTotalPengeluaran, setDataTotalPengeluaran] = useState("");
+  const [dataTotalMargin, setDataTotalMargin] = useState("");
+  const [dataTotalPiutang, setDataTotalPiutang] = useState("");
+  const [komentar, setKomentar] = useState([])
 
-  const router = useRouter()
-  const param = useSearchParams().get("bulan")
+  const router = useRouter();
+  const param = useSearchParams().get("bulan");
 
   const getData = async () => {
+    setLoading(true)
     const res = await axios.get(`/api/laporan/${param}`);
+    getKomentar()
     setData(res.data.res);
-    setdataTotal(res.data.total._sum.keuntungan)
+    setdataTotalKeuntungan(res.data.total._sum.keuntungan);
+    setDataTotalPemasukan(res.data.total._sum.pemasukan);
+    setDataTotalPengeluaran(res.data.total._sum.pengeluaran);
+    setDataTotalMargin(res.data.total._sum.margin);
+    setDataTotalPiutang(res.data.total._sum.piutang);
     setLoading(false);
   };
+
+  const getKomentar = async () => {
+    setLoading(true)
+    const res = await axios.get(`/api/komentar/${param}`);
+    setKomentar(res.data);
+    setLoading(false);
+  };
+
+
 
   useEffect(() => {
     getData();
   }, []);
-
 
   if (loading)
     return (
@@ -42,15 +62,72 @@ const Laporan = () => {
     );
   return (
     <>
-      <div className="md:flex grid grid-cols-3  gap-4 md:gap-10 ">
+      <div className="md:flex grid grid-cols-2 flex-nowrap justify-center gap-4 md:gap-10 mb-10 text-center">
+        <div className=" bg-gradient-to-tr from-blue-600 to-green-500 font-bold dark:text-white flex flex-col items-center justify-center p-2 rounded-lg">
+          <h1>Total Keuntungan</h1>
+          <div>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(dataTotalKeuntungan)}
+          </div>
+        </div>
+        <div className=" bg-gradient-to-tr from-blue-600 to-green-500 font-bold dark:text-white flex flex-col items-center justify-center p-2 rounded-lg">
+          <h1>Total Pemasukan</h1>
+          <div>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(dataTotalPemasukan)}
+          </div>
+        </div>
+        <div className=" bg-gradient-to-tr from-blue-600 to-green-500 font-bold dark:text-white flex flex-col items-center justify-center p-2 rounded-lg">
+          <h1>Total Pengeluaran</h1>
+          <div>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(dataTotalPengeluaran)}
+          </div>
+        </div>
+        <div className=" bg-gradient-to-tr from-blue-600 to-green-500 font-bold dark:text-white flex flex-col items-center justify-center p-2 rounded-lg">
+          <h1>Total Margin</h1>
+          <div>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(dataTotalMargin)}
+          </div>
+        </div>
+        <div className=" bg-gradient-to-tr from-blue-600 to-green-500 font-bold dark:text-white flex flex-col items-center justify-center p-2 rounded-lg">
+          <h1>Total Piutang</h1>
+          <div>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(dataTotalPiutang)}
+          </div>
+        </div>
+        
+      </div>
+      <div className="flex gap-4">
         <AddLaporan getData={getData} />
-        <button className='btn bg-gray-400 font-bold dark:text-white'> Total Keuntungan {new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  }).format(dataTotal)}</button>
-        <button onClick={() => router.push('/bulan')} className="btn bg-green-500 text-white">Kembali</button>
+        <button
+          onClick={() => router.push("/bulan")}
+          className="btn bg-gradient-to-tl from-green-500 to-yellow-800 text-white"
+        >
+          Kembali
+        </button>
       </div>
       <div className=" overflow-auto">
         <table className="table w-full">
@@ -59,14 +136,15 @@ const Laporan = () => {
               <th>Tanggal</th>
               <th>Pemasukan</th>
               <th>Pengeluaran</th>
+              <th>Piutang</th>
               <th>Margin</th>
               <th>15%</th>
-              <th className=" text-center">Action</th>
+              <th >Action</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item.id} >
+              <tr key={item.id}>
                 <td className="text-white">{item.tanggal}</td>
                 <td className="text-white">
                   {new Intl.NumberFormat("id-ID", {
@@ -90,6 +168,14 @@ const Laporan = () => {
                     currency: "IDR",
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
+                  }).format(item.piutang)}
+                </td>
+                <td className="text-white">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
                   }).format(item.margin)}
                 </td>
                 <td className="text-white">
@@ -100,7 +186,7 @@ const Laporan = () => {
                     maximumFractionDigits: 0,
                   }).format(item.keuntungan)}
                 </td>
-                <td className="flex gap-2 justify-center">
+                <td className="flex gap-2">
                   <DeleteLaporan laporan={item} getData={getData} />
                   <EditLaporan laporan={item} getData={getData} />
                 </td>
@@ -109,6 +195,15 @@ const Laporan = () => {
           </tbody>
         </table>
       </div>
+        <AddKomentar getData={getData}/>
+        <div>
+          {komentar.map((item) => (
+          <div key={item.id} className="border border-gray rounded-md p-2 max-w-md my-3">
+            <h1 className="font-bold  border-b w-fit">{item.nama}</h1>
+            <p>{item.pesan}</p>
+          </div>
+          ))}
+        </div>
     </>
   );
 };

@@ -21,6 +21,7 @@ model Bulan {
   month String
   year String
   laporan Laporan[]
+  komentar Komentar[]
 }
 
 model Laporan {
@@ -30,8 +31,17 @@ model Laporan {
   pengeluaran Int
   margin Int
   keuntungan Int
+  piutang Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  bulan Bulan @relation(fields: [bulanId], references: [id])
+  bulanId Int
+}
+
+model Komentar {
+  id Int @id @default(autoincrement())
+  nama String
+  pesan String
   bulan Bulan @relation(fields: [bulanId], references: [id])
   bulanId Int
 }

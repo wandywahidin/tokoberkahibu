@@ -11,7 +11,8 @@ export const POST = async (request) => {
             pengeluaran : body.pengeluaran,
             margin : body.margin,
             keuntungan : body.keuntungan,
-            bulanId : body.bulanId
+            bulanId : body.bulanId,
+            piutang : body.piutang
         }
     })
     return NextResponse.json(laporan, {status:201})

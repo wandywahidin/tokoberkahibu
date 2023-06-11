@@ -13,7 +13,8 @@ export const PATCH = async (request, {params}) => {
             pemasukan : body.pemasukan,
             pengeluaran : body.pengeluaran,
             margin : body.margin,
-            keuntungan : body.keuntungan
+            keuntungan : body.keuntungan,
+            piutang : body.piutang
         }
     })
     return NextResponse.json(laporan, {status:203})
@@ -38,7 +39,9 @@ export const GET = async (request, {params}) => {
             pengeluaran : true,
             margin : true,
             keuntungan : true,
-            bulan : true
+            bulan : true,
+            piutang : true
+            
         }
     })
     const total = await prisma.laporan.aggregate({
@@ -48,7 +51,11 @@ export const GET = async (request, {params}) => {
         select: {
           _sum: {
             select: {
-              keuntungan: true // Aggregating the sum of the "keuntungan" field
+              keuntungan: true, // Aggregating the sum of the "keuntungan" field
+              pemasukan : true,
+              pengeluaran : true,
+              piutang : true,
+              margin : true
             }
           }
         }
